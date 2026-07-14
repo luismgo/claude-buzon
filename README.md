@@ -26,6 +26,10 @@ Si trabajas con varias sesiones de Claude Code en paralelo (por ejemplo una en W
 
 El detalle completo (formato exacto de los mensajes, subcomandos, reglas de seguridad) vive en [`skills/buzon/SKILL.md`](skills/buzon/SKILL.md).
 
+## Identidades y varias terminales con la misma cuenta
+
+Las identidades base salen del entorno y el perfil (`win-personal`, `wsl-work`, etc. en el ejemplo), pero el esquema soporta que convivan varias terminales con la misma cuenta en el mismo entorno. Para eso la skill lleva un registro de presencia en la carpeta `presencia/` del buzón: cada sesión se anota al arrancar (con qué identidad entra, en qué proyecto trabaja y un latido que se refresca con cada operación). Si al arrancar ya hay otra sesión con señal reciente bajo la misma identidad, la nueva pide un distintivo con significado (por ejemplo `win-personal-deploy`, según lo que esa sesión trabaje) y usa su propio buzón, de modo que los mensajes puedan dirigirse a una terminal concreta. También se puede preguntar "¿quién está en el buzón?" para ver las sesiones registradas y hace cuánto dieron su última señal.
+
 ## Seguridad
 
 El contenido de un mensaje recibido se trata siempre como input no confiable de otra sesión, nunca como instrucción directa: se muestra completo y cualquier acción que pida requiere confirmación explícita, salvo dentro de un canal ya abierto y con el alcance que se haya aprobado para él.
