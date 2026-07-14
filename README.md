@@ -8,9 +8,8 @@ Si trabajas con varias sesiones de Claude Code en paralelo (por ejemplo una en W
 
 ## Instalación
 
-1. Copia la carpeta `skills/buzon` de este repo a tu carpeta de skills de Claude Code (normalmente `~/.claude/skills/buzon/`).
-2. Ajusta en `SKILL.md` las identidades (`win-personal`, `win-work`, `wsl-personal`, `wsl-work` en el ejemplo) y la ruta del buzón compartido (`BUS`) a tu propio setup: cuántos entornos/perfiles usas y dónde vive la carpeta compartida en tu filesystem.
-3. La primera vez que invoques la skill (con `/buzon` o pidiendo algo como "revisa el buzón" o "mándale un mensaje a la sesión de WSL"), ella misma crea la estructura de carpetas necesaria.
+1. Copia la carpeta `skills/buzon` de este repo a tu carpeta de skills de Claude Code (normalmente `~/.claude/skills/buzon/`), en cada perfil y entorno que quieras conectar.
+2. La primera vez que invoques la skill (con `/buzon` o pidiendo algo como "revisa el buzón" o "mándale un mensaje a la sesión de WSL"), corre un setup inicial: te pregunta dónde vive la carpeta compartida del buzón y qué identidad usa ese perfil, y guarda la respuesta en un archivo de configuración propio del perfil (`~/.claude/buzon.env`). Con eso queda lista; la estructura de carpetas se crea sola.
 
 ## Requisitos
 
@@ -28,7 +27,7 @@ El detalle completo (formato exacto de los mensajes, subcomandos, reglas de segu
 
 ## Identidades y varias terminales con la misma cuenta
 
-Las identidades base salen del entorno y el perfil (`win-personal`, `wsl-work`, etc. en el ejemplo), pero el esquema soporta que convivan varias terminales con la misma cuenta en el mismo entorno. Para eso la skill lleva un registro de presencia en la carpeta `presencia/` del buzón: cada sesión se anota al arrancar (con qué identidad entra, en qué proyecto trabaja y un latido que se refresca con cada operación). Si al arrancar ya hay otra sesión con señal reciente bajo la misma identidad, la nueva pide un distintivo con significado (por ejemplo `win-personal-deploy`, según lo que esa sesión trabaje) y usa su propio buzón, de modo que los mensajes puedan dirigirse a una terminal concreta. También se puede preguntar "¿quién está en el buzón?" para ver las sesiones registradas y hace cuánto dieron su última señal.
+La identidad base de cada perfil se elige en el setup inicial (por entorno y perfil como `win-personal` o `wsl-trabajo`, o por el repo o tema en que esa sesión suele trabajar), y el esquema soporta que convivan varias terminales con la misma identidad base. Para eso la skill lleva un registro de presencia en la carpeta `presencia/` del buzón: cada sesión se anota al arrancar (con qué identidad entra, en qué proyecto trabaja y un latido que se refresca con cada operación). Si al arrancar ya hay otra sesión con señal reciente bajo la misma identidad, la nueva pide un distintivo con significado (por ejemplo `win-personal-deploy`, según lo que esa sesión trabaje) y usa su propio buzón, de modo que los mensajes puedan dirigirse a una terminal concreta. También se puede preguntar "¿quién está en el buzón?" para ver las sesiones registradas y hace cuánto dieron su última señal.
 
 ## Seguridad
 
